@@ -3,13 +3,23 @@ import styled from "styled-components";
 const Control = () => {
   //Hey, Mr Joshua, modify this data to test different cases
   const [dummyData, setDummyData] = useState({
-    codigo: 176616,
+    codigo: 1765516,
     plan: 3743,
     temperatura: 36,
     tos: false,
     indisposicion: false,
     mareo: false,
   });
+
+  const temperatureAlert = () => {
+    if (dummyData.temperatura > 38) {
+      alert("Hey, tu temperatura es demasiado alta!!");
+    }
+  };
+
+  const onChange = (name, value) => {
+    setDummyData({ ...dummyData, [name]: value });
+  };
   return (
     <LoginCard>
       <Title>Acceda al Campus Virtual </Title>
@@ -18,14 +28,16 @@ const Control = () => {
         placeholder="Código de estudiante"
         id="codigo"
         data-testid="codigo"
-        defaultValue={dummyData.codigo}
+        value={dummyData.codigo}
+        onChange={(e) => onChange("codigo", e.target.value)}
       ></Input>
       <Name>Plan</Name>
       <Input
         placeholder="Plan"
         data-testid="plan"
         id="plan"
-        defaultValue={dummyData.plan}
+        value={dummyData.plan}
+        onChange={(e) => onChange("plan", e.target.value)}
       ></Input>
       <Name>Temperatura</Name>
 
@@ -33,7 +45,8 @@ const Control = () => {
         placeholder="Temperatura"
         data-testid="temperatura"
         id="temperatura"
-        defaultValue={dummyData.temperatura}
+        value={dummyData.temperatura}
+        onChange={(e) => onChange("temperatura", e.target.value)}
       ></Input>
       <Title style={{ alignSelf: "center" }}>
         ¿Posee alguno de estos síntomas?
@@ -44,7 +57,8 @@ const Control = () => {
             data-testid="tos"
             id="tos"
             type="checkbox"
-            defaultChecked={dummyData.tos}
+            checked={dummyData.tos}
+            onChange={(e) => onChange("tos", e.target.checked)}
           ></Input>
           Tos
         </label>
@@ -52,7 +66,8 @@ const Control = () => {
           <Input
             data-testid="indis"
             type="checkbox"
-            defaultChecked={dummyData.indisposicion}
+            checked={dummyData.indisposicion}
+            onChange={(e) => onChange("indisposicion", e.target.checked)}
           ></Input>
           Indisposición
         </label>
@@ -60,12 +75,13 @@ const Control = () => {
           <Input
             data-testid="mareo"
             type="checkbox"
-            defaultChecked={dummyData.mareo}
+            checked={dummyData.mareo}
+            onChange={(e) => onChange("mareo", e.target.checked)}
           ></Input>
           Mareos
         </label>
       </Lista>
-      <Submit>Ingresar datos</Submit>
+      <Submit onClick={() => temperatureAlert()}>Ingresar datos</Submit>
     </LoginCard>
   );
 };
@@ -96,7 +112,7 @@ const Submit = styled.button`
 `;
 const LoginCard = styled.div`
   padding: 50px 20px;
-  height: 400px;
+  height: 450px;
   width: 400px;
   border-radius: 10px;
   border: solid 1px black;
